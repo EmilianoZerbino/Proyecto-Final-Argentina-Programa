@@ -1,0 +1,129 @@
+<div class="container border border-secondary rounded card">
+    <div class="row">
+        <div *ngIf="fondoActual!=null; else defecto_fondo" class="col-sm-12">
+            <img class="img_fondo" height="300" [src]="fondoActual" alt="imagen_de_fondo">
+        </div>
+        <ng-template #defecto_fondo>
+            <div class="col-sm-12">
+                <img class="img_fondo" src='assets/images/defecto_fondo.png' alt="foto_de_perfil">
+            </div>
+        </ng-template>
+    </div>
+    <div class="row">
+        <div *ngIf="perfilActual!=null; else defecto_perfil" class="col-sm-2">
+            <img class="foto_perfil" [src]="perfilActual" alt="foto_de_perfil">
+
+        </div>
+        <ng-template #defecto_perfil>
+            <div class="col-sm-2">
+                <img class="foto_perfil" src='assets/images/defecto_perfil.png' alt="foto_de_perfil">
+            </div>
+        </ng-template>
+        <div class="col-sm-4 nombre">
+
+            <h3>{{usuario.nombres}} {{usuario.apellidos}}</h3>
+
+            <li *ngFor="let especialidad of miPortFolio.formaciones" style="list-style: none">
+                {{especialidad.especialidadName}} ({{especialidad.estadoAcademicoName}})
+            </li>
+            <div class="col-sm-6">
+                <br>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#interes">Tengo interes
+                    en...</button>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="darkblue"
+                    class="bi bi-pencil-fill" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#editarNombre">
+                    <path
+                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                </svg></button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="editarNombre" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content container">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Encabezado</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            (click)="borrar()"></button>
+                    </div>
+                    <div class="mb-3">
+                        <br>
+                        <label>Nombre/s: </label><input type="text" class="form-control" id="inputNombre" rows="9"
+                            [(ngModel)]="usuario.nombres">
+                        <br>
+                        <label>Apellido/s: </label><input type="text" class="form-control" id="inputApellido" rows="9"
+                            [(ngModel)]="usuario.apellidos">
+                        <br>
+                        <div class="mb-3 row">
+                            <label for="imgPerfil" class="form-label">Seleccione Imagen de Perfil</label>
+                            <div class="col-8">
+                                <input (change)="capturaImgPerfil($event)" class="form-control" type="file" id="imgPerfil" [(ngModel)]="url_perfil">
+                            </div>
+                            <br>
+                            <div class="col-4"><img [src]="previsualizacionPerfil" alt="" width="100px"></div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="imgFondo" class="form-label">Seleccione Imagen de Fondo</label>
+                            <div class="col-8">
+                                <input (change)="capturaImgFondo($event)" class="form-control" type="file" id="imgFondo" [(ngModel)]="url_fondo">
+                            </div>
+                            <br>
+                            <div class="col-4"><img [src]="previsualizacionFondo" alt="" width="100px"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                            (click)="borrar()">Cancelar</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                            (click)="editar()">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-1">
+            <li *ngFor="let institucion of miPortFolio.formaciones" style="list-style: none">
+                <div class="row">
+                    <div *ngIf="institucion.institucionLogo!=null; else defecto_institucion" class="col-sm-1">
+                        <img class="logo" [src]="institucion.institucionLogo" alt="logo_institucion">
+                    </div>
+                    <ng-template #defecto_institucion>
+                        <div class="col-sm-2">
+                            <img class="logo" src='assets/images/defecto_institucion.png' alt="foto_de_perfil">
+                        </div>
+                    </ng-template>
+                    <div class="col-sm-9">
+                        <h6 class="logo_desc1">{{institucion.institucionAcronimo}}</h6>
+                    </div>
+                </div>
+            </li>
+        </div>
+
+        <div class="row">
+
+            <!-- Modal -->
+            <div class="modal fade" id="interes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tengo interes en...</h5>
+
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="textarea" rows="9"
+                                [(ngModel)]="usuario.intereses"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                                (click)="editar()">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

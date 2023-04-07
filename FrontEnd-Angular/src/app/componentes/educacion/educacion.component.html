@@ -1,0 +1,260 @@
+<div class="container  border border-secondary rounded card">
+    <div class="titulo row">
+        <div class="col-sm-3">
+            <h3>Educación</h3>
+        </div>
+        <div class="col-sm-2">
+            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="darkgreen"
+                    class="bi bi-plus-lg" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#agregarEducacion">
+                    <path fill-rule="evenodd"
+                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                </svg></button>
+            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="darkred"
+                    class="bi bi-trash-fill" viewBox="0 0 16 16" data-bs-toggle="modal"
+                    data-bs-target="#eliminarEducacion">
+                    <path
+                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd"
+                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                </svg></button>
+        </div>
+    </div>
+    <li *ngFor="let formacion of miPortFolio.formaciones" style="list-style: none">
+        <div class="row">
+            <div *ngIf="formacion.institucionLogo!=null; else defecto_institucion" class="col-sm-1">
+                <img class="logo_educacion" [src]="formacion.institucionLogo" alt="logo_institucion">
+            </div>
+            <ng-template #defecto_institucion>
+                <div class="col-sm-1">
+                    <img class="logo_educacion" src='assets/images/defecto_institucion.png' alt="logo_institucion">
+                </div>
+            </ng-template>
+            <div class="col-sm-11">
+                <h5>{{formacion.institucionName}}</h5>
+                <p>{{formacion.especialidadName}}<br><span
+                        *ngIf="formacion.inicio!='1900'; else noEspecifica">{{formacion.inicio}}</span> - <span
+                        *ngIf="formacion.estadoAcademicoName=='Finalizado'; else incompleto"><span
+                            *ngIf="formacion.fin!='1900'; else noEspecifica">{{formacion.fin}}</span></span>
+                </p>
+            </div>
+            <ng-template #incompleto>
+                <span *ngIf="formacion.estadoAcademicoName=='En Curso'; else incompleto2">Actualidad</span>
+                <ng-template #incompleto2>
+                    <span>Incompleto</span>
+                </ng-template>
+            </ng-template>
+            <ng-template #noEspecifica>
+                <span>No Especifica</span>
+            </ng-template>
+        </div>
+    </li>
+
+    <!-- Modal -->
+    <div class="modal fade" id="agregarEducacion" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar Educacion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="institucion">Seleccione Institución:</label>
+                        </div>
+                        <div class="col-6">
+                            <select (change)="cargarCarreras()" class="form-select" [(ngModel)]="institucionName"
+                                [disabled]="formInst" [ngStyle]="{'color': formInst ? 'lightgray' : 'black'}">
+                                <option *ngFor="let institucion of instituciones" [value]="institucion.nombre">
+                                    {{institucion.nombre}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="formInst==false; else cerrarFormInst" class="col-3">
+                            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    fill="darkgreen" class="bi bi-plus-lg" viewBox="0 0 16 16"
+                                    (click)="habilitarAgregarInstitucion()">
+                                    <path fill-rule="evenodd"
+                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                </svg></button>
+
+                        </div>
+                        <ng-template #cerrarFormInst>
+                            <div class="col-3">
+                                <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="red" class="bi bi-dash-lg" viewBox="0 0 16 16"
+                                        (click)="habilitarAgregarInstitucion()">
+                                        <path fill-rule="evenodd"
+                                            d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+                                    </svg></button>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <br>
+                    <div *ngIf="formInst">
+                        <div class="row">
+                            <div class="col-4" style="text-align: right;">
+                                <label for="">Nombre de la Institución: </label>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" [(ngModel)]="nombreInstitucion" style="width:20em">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-4" style="text-align: right;">
+                                <label for="">Acronimo: </label>
+                            </div>
+                            <div class="col-1">
+                                <input type="text" maxlength="5" style="width:75px" [(ngModel)]="acronimoInstitucion">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-4" style="text-align: right">
+                                <label for="">Seleccione Logo: </label>
+
+                            </div>
+                            <div class="col-5">
+                                <input (change)="capturaImgLogo($event)" class="form-control" type="file" id="imgLogo"
+                                    [(ngModel)]="url_logo">
+                            </div>
+                            <div class="col-1">
+                                <img [src]="previsualizacionLogo" alt="" width="70px">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-7" style="text-align: right;">
+                                <button class="btn btn-success" (click)="AgregarInstitucion()">Agregar</button>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="institucion">Seleccione Carrera:</label>
+                        </div>
+                        <div class="col-6">
+                            <select (change)="chequear()" class="form-select" [disabled]="formCarr" [(ngModel)]="titulo"
+                                [ngStyle]="{'color': formCarr ? 'lightgray' : 'black'}">
+                                <option *ngFor="let carrera of carrerasListadas" id="selCarr" [value]="carrera.titulo">
+                                    {{carrera.titulo}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="formCarr==false; else cerrarFormCarr" class="col-3">
+                            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    fill="darkgreen" class="bi bi-plus-lg" viewBox="0 0 16 16"
+                                    (click)="habilitarAgregarCarrera()">
+                                    <path fill-rule="evenodd"
+                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                </svg></button>
+                        </div>
+                        <ng-template #cerrarFormCarr>
+                            <div class="col-3">
+                                <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="red" class="bi bi-dash-lg" viewBox="0 0 16 16"
+                                        (click)="habilitarAgregarCarrera()">
+                                        <path fill-rule="evenodd"
+                                            d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+                                    </svg></button>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <br>
+                    <div *ngIf="formCarr">
+                        <div class="row">
+                            <div class="col-4" style="text-align: right;">
+                                <label for="">Nombre de la Carrera: </label>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" [(ngModel)]="tituloCarrera" style="width:20em">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-7" style="text-align: right;">
+                                <button class="btn btn-success" (click)="AgregarCarrera()">Agregar</button>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="institucion">Estado Académico:</label>
+                        </div>
+                        <div class="col-3">
+                            <select (change)="chequear()" class="form-select" [(ngModel)]="estadoAcademico">
+                                <option *ngFor="let estado of estadosAcademicos" [value]="estado.id">
+                                    {{estado.estado}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="institucion">Fecha de Inicio:</label>
+                        </div>
+                        <div class="col-3">
+                            <input type="date" [(ngModel)]="inicio">
+                        </div>
+                        <div class="col-3" *ngIf="estadoAcademico==1">
+                            <label for="institucion">Fecha de Finalización:</label>
+                        </div>
+                        <div class="col-1" *ngIf="estadoAcademico==1">
+                            <input type="date" [(ngModel)]="fin">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" [disabled]="chequeoCorrecto"
+                            (click)="agregarFormacion()">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Modal -->
+        <div class="modal fade" id="eliminarEducacion" tabindex="-1" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Eliminar Educacion</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <br>
+                    <li *ngFor="let formacion of miPortFolio.formaciones" style="list-style: none">
+                        <div class="row">
+                            <div *ngIf="formacion.institucionLogo!=null; else defecto_institucion" class="col-sm-2">
+                                <img class="logo_educacion" [src]="formacion.institucionLogo" alt="logo_institucion">
+                            </div>
+                            <ng-template #defecto_institucion>
+                                <div class="col-sm-2">
+                                    <img class="logo_educacion" src='assets/images/defecto_institucion.png'
+                                        alt="logo_institucion">
+                                </div>
+                            </ng-template>
+                            <div class="col-sm-8">
+                                <h5>{{formacion.institucionName}}</h5>
+                                <p>{{formacion.especialidadName}}<br>{{formacion.inicio}} - {{formacion.fin}}</p>
+                            </div>
+                            <div class="col-sm-1">
+                                <br>
+                                <button type="button" class="btn btn-danger"
+                                    (click)="eliminar(formacion.id)">Eliminar</button>
+                            </div>
+                        </div>
+                    </li>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   

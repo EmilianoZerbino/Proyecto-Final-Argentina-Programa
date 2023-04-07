@@ -1,0 +1,55 @@
+<div class="container" style="margin-top:5%">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-7">
+            <h1 class="login" style="text-align: center; width:50%;">Mi Portafolio Web</h1>
+            <div class="row">
+                <div class="col-5">
+                    <h5 style="display: inline;">Nuevo Usuario</h5>
+                </div>
+                <div class="col-3"><button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close" (click)="volverInicio()"></button></div>
+                <br><br>
+                <div style="margin-left: -3%;">
+                    <div class="row">
+                        <div class="col-3"><label for="">Nombre/s*: </label></div>
+                        <div class="col-4"><input type="text" class="form-control" [(ngModel)]="nombre"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3"><label for="">Apellido/s*: </label></div>
+                        <div class="col-4"><input type="text" class="form-control" [(ngModel)]="apellido"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3"><label for="">Email*: </label></div>
+                        <div class="col-4"><input type="text" class="form-control" [(ngModel)]="email"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3"><label for="">Password* : </label></div>
+                        <div class="col-4"><input type="password" class="form-control" [(ngModel)]="password"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3"><label for="">Confirme Password: </label></div>
+                        <div class="col-4"><input type="password" class="form-control" [(ngModel)]="passwordConfirmation"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3"><label for="">DNI*: </label></div>
+                        <div class="col-4"><input type="text" class="form-control" [(ngModel)]="dni"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3"><label for="">Fecha de Nacimiento*: </label></div>
+                        <div class="col-4"><input type="date" class="form-control" [(ngModel)]="fechNac"></div>
+                    </div>
+                    <br>
+                </div>
+                
+                <div class="row">
+                    <div class="col-4"><button class="btn btn-primary" style=" margin-left: 20%;" (click)="nuevoUsuario()">Crear Nuevo Usuario</button></div>
+                    <div class="col-3"><button class="btn btn-danger" type="reset" value="Borrar" (click)="borrarContenido()">Borrar</button></div>
+                </div>
+            </div>

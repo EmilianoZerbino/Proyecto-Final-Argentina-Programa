@@ -1,0 +1,23 @@
+.detras{
+    height: 1em;
+    width:100%;
+    background: #ddd;
+    border-radius: 0.4em;
+}
+
+.delante{
+    text-align:center;
+    line-height: 0.7em;
+    color: antiquewhite;
+    height: 1em;
+    background: #306fed;
+    border-radius: 0.4em;
+}
+
+.letra1{
+    font-family: Verdana, Times, 'Times New Roman', serif;
+}
+
+.letra2{
+    font-size: 0.7em;
+}

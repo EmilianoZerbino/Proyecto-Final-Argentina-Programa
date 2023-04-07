@@ -1,0 +1,143 @@
+<div class="container  border border-secondary rounded card">
+    <div class="titulo row">
+        <div class="col-sm-3">
+            <h3>Tecnologías</h3>
+        </div>
+        <div class="col-sm-2">
+            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="darkgreen"
+                    class="bi bi-plus-lg" viewBox="0 0 16 16" data-bs-toggle="modal"
+                    data-bs-target="#agregarTecnologia">
+                    <path fill-rule="evenodd"
+                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                </svg></button>
+            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="darkred"
+                    class="bi bi-trash-fill" viewBox="0 0 16 16" data-bs-toggle="modal"
+                    data-bs-target="#eliminarTecnologia">
+                    <path
+                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd"
+                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                </svg></button>
+        </div>
+    </div>
+    <li *ngFor="let tecnologia of miPortFolio.tecnologiaUsuario" style="list-style: none">
+        <div class="skill">
+            <p class="texto_barra letra1">{{tecnologia.tecnologiaName}}</p>
+            <div class="detras">
+                <div class="delante" [ngStyle]="{'width.%':tecnologia.nivel}"><span
+                        class="letra1 letra2">{{tecnologia.nivel}} %</span></div>
+            </div>
+        </div>
+    </li>
+    <!-- Modal -->
+    <div class="modal fade" id="agregarTecnologia" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar Tecnología</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3" style="text-align: right;">
+                            <label for="tecnologia">Seleccione Tecnología:</label>
+                        </div>
+                        <div class="col-6">
+                            <select (change)="chequear()" class="form-select" [(ngModel)]="tecnologiaName" [disabled]="formTec"
+                                [ngStyle]="{'color': formTec ? 'lightgray' : 'black'}">
+                                <option *ngFor="let tecnologia of tecnologias" [value]="tecnologia.nombre">
+                                    {{tecnologia.nombre}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="formTec==false; else cerrarFormTec" class="col-3">
+                            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    fill="darkgreen" class="bi bi-plus-lg" viewBox="0 0 16 16"
+                                    (click)="habilitarAgregarTecnologia()">
+                                    <path fill-rule="evenodd"
+                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                </svg></button>
+
+                        </div>
+                        <ng-template #cerrarFormTec>
+                            <div class="col-3">
+                                <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="red" class="bi bi-dash-lg" viewBox="0 0 16 16"
+                                        (click)="habilitarAgregarTecnologia()">
+                                        <path fill-rule="evenodd"
+                                            d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+                                    </svg></button>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <br>
+                    <div *ngIf="formTec">
+                        <div class="row">
+                            <div class="col-4" style="text-align: right;">
+                                <label for="">Nueva: </label>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" [(ngModel)]="nombreTecnologia" class="form-control"
+                                    style="width:15em">
+                            </div>
+                            <div class="col-3" style="text-align: right;">
+                                <button class="btn btn-success" (click)="nuevaTecnologia()">Agregar</button>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3" style="text-align: right;">
+                            <label for="">Nivel: </label>
+                        </div>
+                        <div class="col-4" style="text-align: right;">
+                            <div class="input-group mb-1">
+                                <input  [(ngModel)]="nivel" (ngModelChange)="chequearNivel()" type="number" class="form-control" style="width:5em" min="1" max="100">
+                                <span class="input-group-text" id="basic-addon2">%</span>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <p *ngIf="errorNivel" style="color:darkred">Debe Ingresar un valor entre 1 y 100</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                            [disabled]="chequeoCorrecto" (click)="agregarTecnologia()">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="eliminarTecnologia" tabindex="-1" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Tecnologías</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <br>
+                <li *ngFor="let tecnologia of miPortFolio.tecnologiaUsuario" style="list-style: none">
+                    <div class="row">
+                        <div class="col-sm-6" style="text-align: end;">
+                            <h5>{{tecnologia.tecnologiaName}}</h5>
+                        </div>
+                        <div class="col-sm-1">
+                            <br>
+                            <button type="button" class="btn btn-danger" style="margin-top: -50px;"
+                                (click)="eliminar(tecnologia.id)">Eliminar</button>
+                        </div>
+                    </div>
+                </li>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

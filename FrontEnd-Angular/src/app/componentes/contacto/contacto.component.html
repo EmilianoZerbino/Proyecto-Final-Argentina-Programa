@@ -1,0 +1,110 @@
+<div class="container  border border-secondary rounded card">
+    <div class="titulo row">
+        <div class="col-sm-3">
+            <h3>Contactos</h3>
+        </div>
+        <div class="col-sm-2">
+            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="darkgreen"
+                    class="bi bi-plus-lg" viewBox="0 0 16 16" viewBox="0 0 16 16" data-bs-toggle="modal"
+                    data-bs-target="#agregarContacto">
+                    <path fill-rule="evenodd"
+                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                </svg></button>
+            <button class="boton"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="darkred"
+                    class="bi bi-trash-fill" viewBox="0 0 16 16" data-bs-toggle="modal"
+                    data-bs-target="#eliminarContacto">
+                    <path
+                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd"
+                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                </svg></button>
+        </div>
+    </div>
+    <li *ngFor="let contacto of miPortFolio.contactos" style="list-style: none">
+        <div class="row">
+            <div *ngIf="contacto.url_logo!=null; else defecto_contacto" class="col-sm-1">
+                <img class="logo2" [src]="contacto.url_logo" alt="logo_link">
+            </div>
+            <ng-template #defecto_contacto>
+                <div class="col-sm-1">
+                    <img class="logo2" src='assets/images/defecto_contacto.png' alt="logo_contacto">
+                </div>
+            </ng-template>
+            <div class="col-sm-5">
+                <h6><a> {{contacto.url_contacto}}</a></h6>
+            </div>
+        </div>
+    </li>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="agregarContacto" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Contacto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <br>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-3" style="text-align: right;">
+                        <label for="skill">Contacto:</label>
+                    </div>
+
+                    <div class="col-6">
+                        <input type="text" class="form-control" [(ngModel)]="linkContacto" (ngModelChange)="chequear()">
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-3" style="text-align: right">
+                        <label for="">Seleccione Logo: </label>
+                    </div>
+                    <div class="col-5">
+                        <input (change)="capturaImgLogo($event)" class="form-control" type="file" id="imgLogo"
+                            [(ngModel)]="url_logo">
+                    </div>
+                    <div class="col-1">
+                        <img [src]="previsualizacionLogo" alt="" width="38px">
+                    </div>
+                </div>
+                <br><br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" [disabled]="chequeoCorrecto"
+                        (click)="agregarContacto()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="eliminarContacto" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Contactos</h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <br>
+            <li *ngFor="let contacto of miPortFolio.contactos" style="list-style: none">
+                <div class="row">
+                    <div class="col-sm-6" style="text-align: end;">
+                        <h5>{{contacto.url_contacto}}</h5>
+                    </div>
+                    <div class="col-sm-1">
+                        <br>
+                        <button type="button" class="btn btn-danger" style="margin-top: -50px;"
+                            (click)="eliminar(contacto.id)">Eliminar</button>
+                    </div>
+                </div>
+            </li>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
